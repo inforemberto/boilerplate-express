@@ -2,6 +2,23 @@
 var express = require("express");
 var app = express();
 
+//Logging Middleware
+app.use((req, res, next)=>{
+console.log(`${req.method} ${req.path} - ${req.ip}`);
+next();
+})
+
+//Time Middleware
+app.get("/now", (req, res, next)=>{
+  req.time = new Date().toString();
+  next();
+},
+(req, res, next)=>{
+res.json({
+  "time": req.time
+});
+})
+
 //Serve static files from /public
 let staticPath = __dirname + "/public";
 app.use("/public", express.static(staticPath));
