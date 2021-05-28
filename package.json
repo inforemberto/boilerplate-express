@@ -9,6 +9,6 @@
 	},
 	"main": "server.js",
 	"scripts": {
-		"start": "node server.js"
+		"start": "nodemon -i \"**/node_modules/**\" server.js"
 	}
 }
