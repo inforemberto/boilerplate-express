@@ -1,6 +1,10 @@
 //require('dotenv').config()
 var express = require("express");
 var app = express();
+var bodyParser = require("body-parser");
+
+//POST Data Middleware
+app.use(bodyParser.urlencoded({ extended: false }));
 
 //Logging Middleware
 app.use((req, res, next)=>{
@@ -29,6 +33,7 @@ app.get("/", (req, res) => {
   res.sendFile(absolutePath);
 });
 
+//Testing JSON response
 app.get("/json", (req, res)=>{
     const msg = "Hello json";
     res.json({
@@ -36,4 +41,22 @@ app.get("/json", (req, res)=>{
     });
 });
 
+//API
+app.get("/:word/echo", (req, res)=>{
+  res.json({
+    "echo": req.params.word
+  })
+})
+
+app.get("/name", (req, res)=>{
+  res.json({
+    "name": `${req.query.first} ${req.query.last}`
+  })
+});
+
+app.post("/name", (req, res)=>{
+  res.json({
+    "name": `${req.body.first} ${req.body.last}`
+  });
+});
 module.exports = app;
